@@ -1,6 +1,7 @@
 package com.example.usere_mangement.configuration;
 
 import com.example.usere_mangement.service.UserService;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,77 +13,63 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Rhett Herring
- * 8/30/20
- * 3:54 PM
- */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Autowired
+  private DataSource dataSource;
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder());
-        return auth;
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+    auth.setUserDetailsService(userService);
+    auth.setPasswordEncoder(passwordEncoder());
+    return auth;
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(
-                "/registration**",
-                "/js/**",
-                "/css/**",
-                "/img/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(authenticationProvider());
+  }
 
-    //    @Autowired
-    //    private UserDetailsService userDetailsService;
-    //
-    //    @Autowired
-    //    private DataSource dataSource;
-    //
-    //    @Override
-    //    protected void configure(HttpSecurity http) throws Exception {
-    //        http.authorizeRequests().antMatchers("/actuator/*", "/login.html", "/h2-console/**", "/static", "/*").permitAll();
-    //        http.authorizeRequests().anyRequest().authenticated();
-    //        http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
-    //                .failureForwardUrl("/login.html?loginFailed=true");
-    //        http.rememberMe().userDetailsService(userDetailsService);
-    //        http.csrf().disable();
-    //        http.headers().frameOptions().disable();
-    //    }
-    //
-    //    @Override
-    //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //        auth.jdbcAuthentication().dataSource(dataSource);
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+        .authorizeRequests()
+        .antMatchers(
+            "/actuator/*",
+            "/index",
+            "/h2-console/**",
+            "/registration**",
+            "/js/**",
+            "/css/**",
+            "/img/**").permitAll();
+//    http
+//        .authorizeRequests()
+//        .anyRequest()
+//        .authenticated();
+    http
+        .formLogin()
+        .loginPage("/login")
+//        .failureForwardUrl("/login.html?loginFailed=true")
+        .permitAll();
+    http
+        .logout()
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/login?logout")
+        .permitAll();
+  }
+
 }
 
