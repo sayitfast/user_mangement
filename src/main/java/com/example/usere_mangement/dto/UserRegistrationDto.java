@@ -13,11 +13,14 @@ public class UserRegistrationDto {
 
   }
 
-  public UserRegistrationDto(String firstName, String lastName, String email, String password) {
+  public UserRegistrationDto(String firstName, String lastName, String email,
+      String password, String role, Long id) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.role = role;
+    this.id = id;
   }
 
   public String getFirstName() {

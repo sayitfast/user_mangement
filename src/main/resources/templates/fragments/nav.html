@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <navigation th:fragment="nav">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button aria-controls="navbar" aria-expanded="false"
-              class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse"
-              type="button">
-        <span class="sr-only">Toggle navigation</span> <span
-          class="icon-bar"></span> <span class="icon-bar"></span> <span
-          class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#" th:href="@{/}">Registration and
-        Login Module</a>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button aria-controls="navbar" aria-expanded="false"
+                class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse"
+                type="button">
+          <span class="sr-only">Toggle navigation</span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+          Login Module</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav">
+          <li><a th:href="@{/index}">Home</a></li>
+          <li><a th:href="@{/admin}">Admin</a></li>
+          <li sec:authorize="isFullyAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+          <li sec:authorize="isAnonymous()"><a th:href="@{/logout}">NOT Authenticated</a></li>
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav">
+          <!--        <li sec:authorize="isFullyAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
+          <!--        <li sec:authorize="isAnonymous()"><a th:href="@{/logout}">NOT Authenticated</a></li>-->
+        </ul>
+      </div>
     </div>
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <li><a th:href="@{/index}">Home</a></li>
-        <li><a th:href="@{/admin}">Admin</a></li>
-        <li sec:authorize="isFullyAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-        <li sec:authorize="isAnonymous()"><a th:href="@{/logout}">NOT Authenticated</a></li>
-      </ul>
-    </div>
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <!--        <li sec:authorize="isFullyAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
-        <!--        <li sec:authorize="isAnonymous()"><a th:href="@{/logout}">NOT Authenticated</a></li>-->
-      </ul>
-    </div>
-  </div>
-</nav>
+  </nav>
 </navigation>
 </html>

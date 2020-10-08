@@ -39,7 +39,12 @@ public class UserServiceImpl implements UserService {
         //registrationDto.getPassword(), Arrays.asList(new Role("ROLE_USER")));
         passwordEncoder.encode(registrationDto.getPassword()),
         Arrays.asList(new Role("ROLE_USER")));
-    return userRepository.save(appUser);
+    // check if email address already exists before saving account
+    if (userRepository.existsByEmail(registrationDto.getEmail())) {
+      throw new Exception("An account with that email address already exists!");
+    } else {
+      return userRepository.save(appUser);
+    }
   }
 
   @Override

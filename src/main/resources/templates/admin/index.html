@@ -28,7 +28,7 @@
     <h1>ADMIN</h1>
     Welcome: <span th:text="${#authentication.getPrincipal().getUsername()}"></span><br>
     Role: <span th:text="${#authentication.getPrincipal().authorities}"></span>
-<!--    <span sec:authentication="principal.username"></span>-->
+    <!--    <span sec:authentication="principal.username"></span>-->
   </div>
   <br>
   <br>
@@ -46,6 +46,7 @@
           <th>Last Name</th>
           <th>Email</th>
           <th>Role</th>
+          <th>Roles</th>
           <th></th>
           <th></th>
         </tr>
@@ -56,6 +57,12 @@
           <td th:text="${appuser.lastName}"/>
           <td th:text="${appuser.email}"/>
           <td th:text="${appuser.roles[0].name}"/>
+          <td>
+            <ul>
+              <li style="list-style-type: none;" th:each="role: ${appuser.roles}"
+                  th:text="${role.name}"></li>
+            </ul>
+          </td>
           <td>
             <a class="btn btn-primary">Edit</a>
           </td>
