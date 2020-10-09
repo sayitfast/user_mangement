@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public AppUser save(UserRegistrationDto registrationDto) {
     AppUser appUser = new AppUser(registrationDto.getFirstName(),
-        registrationDto.getLastName(), registrationDto.getEmail(),
+        registrationDto.getLastName(), registrationDto.getEmail().toLowerCase(),
+        registrationDto.getPhone(),
         // use following to send unencypted data to DB. TESTING only
         //registrationDto.getPassword(), Arrays.asList(new Role("ROLE_USER")));
         passwordEncoder.encode(registrationDto.getPassword()),

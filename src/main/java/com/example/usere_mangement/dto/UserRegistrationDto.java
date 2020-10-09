@@ -5,6 +5,7 @@ public class UserRegistrationDto {
   private String firstName;
   private String lastName;
   private String email;
+  private String phone;
   private String password;
   private String role;
   private Long id;
@@ -13,11 +14,12 @@ public class UserRegistrationDto {
 
   }
 
-  public UserRegistrationDto(String firstName, String lastName, String email,
+  public UserRegistrationDto(String firstName, String lastName, String email, String phone,
       String password, String role, Long id) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    this.phone = phone;
     this.password = password;
     this.role = role;
     this.id = id;
@@ -45,6 +47,14 @@ public class UserRegistrationDto {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public String getPassword() {
